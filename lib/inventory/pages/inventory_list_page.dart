@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clean_architecture_example/inventory/state/inventory_provider.dart';
 import 'package:clean_architecture_example/inventory/models/inventory_item.dart';
+import 'package:clean_architecture_example/inventory/pages/add_inventory_item_page.dart';
 
 class InventoryListPage extends StatelessWidget {
   const InventoryListPage({super.key});
@@ -48,7 +49,9 @@ class InventoryListPage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => provider.addSampleItem(),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => const AddInventoryItemPage(),
+        )),
       ),
     );
   }
