@@ -1,22 +1,16 @@
-import 'package:clean_architecture_example/data/repositories/organic_repository_impl.dart';
-import 'package:clean_architecture_example/domain/usecases/get_organics_usecase.dart';
-import 'package:clean_architecture_example/presentation/Organic/state/organic_provider.dart';
+import 'package:clean_architecture_example/inventory/state/inventory_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'presentation/Organic/pages/organic_list_page.dart';
-import 'package:http/http.dart' as http;
+import 'package:clean_architecture_example/inventory/pages/inventory_list_page.dart';
 
 void main() {
-  final organicRepository = OrganicRepositoryImpl(client: http.Client());
-  final getOrganicUseCase = GetOrganicsUseCase(organicRepository);
+  // inventory provider doesn't need external dependencies for this simple demo
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) =>
-              OrganicProvider(getOrganicsUseCase: getOrganicUseCase)
-                ..fetchOrganics(),
+          create: (_) => InventoryProvider()..loadItems(),
         ),
       ],
       child: MyApp(),
@@ -29,6 +23,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'App', home: OrganicListPage());
+  return MaterialApp(title: 'Warehouse Manager', home: const InventoryListPage());
   }
 }
